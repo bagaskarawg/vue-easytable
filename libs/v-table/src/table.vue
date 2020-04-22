@@ -15,9 +15,10 @@
             <table class="v-table-htable" border="0" cellspacing="0" cellpadding="0">
               <tbody>
                 <template v-if="frozenTitleCols.length > 0">
-                  <tr v-for="row in frozenTitleCols">
+                  <tr v-for="(row, rowIndex) in frozenTitleCols" :key="`row-${rowIndex}`">
                     <td
-                      v-for="col in row"
+                      v-for="(col, colIndex) in row"
+                      :key="`col-${colIndex}`"
                       :class="[col.titleCellClassName]"
                       :colspan="col.colspan"
                       :rowspan="col.rowspan"
@@ -45,10 +46,10 @@
                             v-else-if="typeof col.componentName ==='string' && col.componentName.length > 0"
                           >
                             <component
-                                :rowData="item"
                                 :field="col.field ? col.field : ''"
                                 :index="rowIndex"
                                 :is="col.componentName"
+                                :options="col.options"
                                 @on-custom-comp="customCompFunc"
                             ></component>
                           </span>
@@ -86,7 +87,8 @@
                 <template v-else>
                   <tr class="v-table-header-row">
                     <td
-                      v-for="col in frozenCols"
+                      v-for="(col, colIndex) in frozenCols"
+                      :key="`col-${colIndex}`"
                       :class="[col.titleCellClassName]"
                       @mousemove.stop="handleTitleMouseMove($event,col.field)"
                       @mousedown.stop="handleTitleMouseDown($event)"
@@ -112,9 +114,9 @@
                             v-else-if="typeof col.componentName ==='string' && col.componentName.length > 0"
                           >
                             <component
-                                :rowData="item"
                                 :field="col.field ? col.field : ''"
                                 :index="rowIndex"
+                                :options="col.options"
                                 :is="col.componentName"
                                 @on-custom-comp="customCompFunc"
                             ></component>
