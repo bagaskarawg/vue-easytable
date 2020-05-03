@@ -983,6 +983,8 @@ export default {
       if (widthCountCheck > 1) {
         console.error(this.errorMsg + "Only allow one column is not set width");
       }
+
+      this.resize()
     },
 
     // 当没设置宽度和高度时动态计算
